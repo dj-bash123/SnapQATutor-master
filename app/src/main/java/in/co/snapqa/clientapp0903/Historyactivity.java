@@ -20,6 +20,12 @@ import in.co.snapqa.clientapp0903.models.UserHistoryResponses;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,6 +51,7 @@ public class Historyactivity extends AppCompatActivity {
     UserHistoryRecyclerViewAdapter userHistoryRecyclerViewAdapter;
     ProgressDialog progressDialog;
     TextView tv;
+    Date date2;
 
 
 

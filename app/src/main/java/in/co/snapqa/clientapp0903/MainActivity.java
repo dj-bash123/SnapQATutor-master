@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
             NewDealsFragment newDealFragment = new NewDealsFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame_main_activity, newDealFragment).commit();
-            getSupportActionBar().setTitle("Available Deals");
+            getSupportActionBar().setTitle("Available Sessions");
         }
 
 
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        
+
         return true;
     }
 
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity
             NewDealsFragment newDealFragment = new NewDealsFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame_main_activity, newDealFragment).commit();
-            getSupportActionBar().setTitle("Available Deals");
+            getSupportActionBar().setTitle("Available Sessions");
 
         } else if (id == R.id.ic_menu_live_session) {
 

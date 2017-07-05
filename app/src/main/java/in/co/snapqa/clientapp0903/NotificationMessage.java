@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.preference.*;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -32,6 +33,8 @@ public class NotificationMessage extends BroadcastReceiver {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
+                        .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
+                                R.mipmap.logo))
                         .setSmallIcon(R.drawable.logo)
                         .setContentTitle("HURRY UP!!")
                         .setContentText("You have a session in 15 minutes.");

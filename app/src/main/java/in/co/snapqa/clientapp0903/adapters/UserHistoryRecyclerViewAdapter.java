@@ -8,8 +8,16 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import in.co.snapqa.clientapp0903.models.UserHistoryResponses;
 import in.co.snapqa.clientapp0903.R;
+
+
 
 
 /**
@@ -20,6 +28,8 @@ public class UserHistoryRecyclerViewAdapter extends RecyclerView.Adapter<UserHis
 
 
     UserHistoryResponses userHistoryResponsess;
+    Date date1,date2;
+    String time;
 
     public UserHistoryRecyclerViewAdapter(UserHistoryResponses userHistoryResponses){
         userHistoryResponsess = userHistoryResponses;
@@ -40,7 +50,26 @@ public class UserHistoryRecyclerViewAdapter extends RecyclerView.Adapter<UserHis
 
         holder.dealsid.setText(userHistoryResponsess.getResponse().get(position).getDealsId());
 
-        holder.createdat.setText(userHistoryResponsess.getResponse().get(position).getCreatedAt());
+        String date = userHistoryResponsess.getResponse().get(position).getCreatedAt();
+
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        try {
+            date1 = formatter.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+
+        SimpleDateFormat month_date = new SimpleDateFormat("MMM");
+        String month_name = month_date.format(cal1.getTime());
+
+
+        time = cal1.get(Calendar.DATE) + " "  + month_name + " " + cal1.get(Calendar.YEAR);
+
+        holder.createdat.setText(time);
 
         Log.d("jkhdjksahda  ","" + userHistoryResponsess.getResponse().get(position).getCreatedAt() );
 
