@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.keiferstone.nonet.NoNet;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import in.co.snapqa.clientapp0903.interfaces.API;
 import in.co.snapqa.clientapp0903.models.AcceptedDealResponse;
@@ -143,7 +144,7 @@ public class TutorSettings extends AppCompatActivity {
 
         specializationString = "";
 
-        specializationEditFAB.setOnClickListener(new View.OnClickListener() {
+        /*specializationEditFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editor = sharedpreferences.edit();
@@ -152,7 +153,7 @@ public class TutorSettings extends AppCompatActivity {
                 Intent intent = new Intent(TutorSettings.this, SelectSubjectActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         AuthRequest authRequest = new AuthRequest();
         authRequest.setToken(token);
@@ -206,6 +207,19 @@ public class TutorSettings extends AppCompatActivity {
                 Log.d("error in response:  ", "  " + t.getMessage());
             }
         });
+
+        specializationEditFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor = sharedpreferences.edit();
+                editor.putString(Subjects, "Subjects");
+                //Log.d("sub ke name", String.valueOf(specs) );
+                editor.commit();
+                Intent intent = new Intent(TutorSettings.this, SelectSubjectActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         paymentEditFAB.setOnClickListener(new View.OnClickListener() {
             @Override

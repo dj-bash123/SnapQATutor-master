@@ -11,6 +11,8 @@ import in.co.snapqa.clientapp0903.models.NewDealResponses;
 import in.co.snapqa.clientapp0903.models.OTPResponse;
 import in.co.snapqa.clientapp0903.models.PaymentDetailsRequest;
 import in.co.snapqa.clientapp0903.models.PaymentDetailsResponse;
+import in.co.snapqa.clientapp0903.models.RejectDealRequest;
+import in.co.snapqa.clientapp0903.models.RejectedDealResponse;
 import in.co.snapqa.clientapp0903.models.SendOTP;
 import in.co.snapqa.clientapp0903.models.SignUpRequest;
 import in.co.snapqa.clientapp0903.models.SignUpResponse;
@@ -49,6 +51,9 @@ public interface API {
 
     @POST("deals/acceptedDeal")
     Call<AcceptedDealResponse> acceptedDeal(@Body AcceptDealRequest acceptDealRequest);
+
+    @POST("deals/rejectedDeal")
+    Call<RejectedDealResponse> rejectedDeal(@Body RejectDealRequest acceptDealRequest);
 
     @POST("deals/liveDeals")
     Call<NewDealResponses> liveDeals(@Body AuthRequest authRequest);

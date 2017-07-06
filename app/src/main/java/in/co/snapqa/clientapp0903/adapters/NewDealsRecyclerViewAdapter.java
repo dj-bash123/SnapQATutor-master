@@ -16,7 +16,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,6 +42,8 @@ import in.co.snapqa.clientapp0903.interfaces.API;
 import in.co.snapqa.clientapp0903.models.AcceptDealRequest;
 import in.co.snapqa.clientapp0903.models.AcceptedDealResponse;
 import in.co.snapqa.clientapp0903.models.NewDealResponses;
+import in.co.snapqa.clientapp0903.models.RejectDealRequest;
+import in.co.snapqa.clientapp0903.models.RejectedDealResponse;
 import me.anwarshahriar.calligrapher.Calligrapher;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,6 +52,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.ALARM_SERVICE;
+import static android.support.v4.content.ContextCompat.startActivity;
 
 /**
  * Created by OLA on 28/03/17.
@@ -92,7 +98,7 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
         final String ty = newDealResponsess.getResponses().get(position).getDealType();
         Log.d("type ki value", "  " + ty);
 
-        Log.d("jkhdjksahda  ","" + newDealResponsess.getResponses().get(position).getTimeTo() );
+        Log.d("jkhdjksahda  ", "" + newDealResponsess.getResponses().get(position).getTimeTo());
 
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         try {
@@ -109,41 +115,38 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
         cal.add(Calendar.HOUR, 5);
 
 
-
-
-
         Log.d("hdfbsdhbfs :", "" + cal.get(Calendar.HOUR));
 
-        if(Calendar.HOUR<10){
+        if (Calendar.HOUR < 10) {
 
-            if(Calendar.MINUTE<10){
-                ftime = "0" +cal.get(Calendar.HOUR) + ":" + "0"+ cal.get(Calendar.MINUTE);
-            }else {
-                ftime = "0" +cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE);
+            if (Calendar.MINUTE < 10) {
+                ftime = "0" + cal.get(Calendar.HOUR) + ":" + "0" + cal.get(Calendar.MINUTE);
+            } else {
+                ftime = "0" + cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE);
             }
-        }else {
-            if(Calendar.MINUTE<10){
-                ftime = cal.get(Calendar.HOUR) + ":" + "0"+ cal.get(Calendar.MINUTE);
-            }else {
+        } else {
+            if (Calendar.MINUTE < 10) {
+                ftime = cal.get(Calendar.HOUR) + ":" + "0" + cal.get(Calendar.MINUTE);
+            } else {
                 ftime = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE);
             }
         }
 
-        if(Calendar.DATE<10){
-            if(Calendar.MONTH < 10){
+        if (Calendar.DATE < 10) {
+            if (Calendar.MONTH < 10) {
                 testDate = "0" + cal.get(Calendar.DATE) + "/" + "0" + month + "/" + cal.get(Calendar.YEAR);
-            }else {
+            } else {
                 testDate = "0" + cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
             }
-        }else {
-            if(Calendar.MONTH < 10){
+        } else {
+            if (Calendar.MONTH < 10) {
                 testDate = cal.get(Calendar.DATE) + "/" + "0" + month + "/" + cal.get(Calendar.YEAR);
-            }else {
+            } else {
                 testDate = cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
             }
         }
 
-        if(newDealResponsess.getResponses().get(position).getDealType().equals("Live Session")){
+        if (newDealResponsess.getResponses().get(position).getDealType().equals("Live Session")) {
             DateFormat formatte = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             try {
                 date = formatte.parse(String.valueOf(newDealResponsess.getResponses().get(position).getTimeFrom()));
@@ -158,31 +161,31 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
             cal.add(Calendar.MINUTE, 30);
             cal.add(Calendar.HOUR, 5);
 
-            if(Calendar.HOUR<10){
+            if (Calendar.HOUR < 10) {
 
-                if(Calendar.MINUTE<10){
-                    gtime = "0" +cal.get(Calendar.HOUR) + ":" + "0"+ cal.get(Calendar.MINUTE);
-                }else {
-                    gtime = "0" +cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE);
+                if (Calendar.MINUTE < 10) {
+                    gtime = "0" + cal.get(Calendar.HOUR) + ":" + "0" + cal.get(Calendar.MINUTE);
+                } else {
+                    gtime = "0" + cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE);
                 }
-            }else {
-                if(Calendar.MINUTE<10){
-                    gtime = cal.get(Calendar.HOUR) + ":" + "0"+ cal.get(Calendar.MINUTE);
-                }else {
+            } else {
+                if (Calendar.MINUTE < 10) {
+                    gtime = cal.get(Calendar.HOUR) + ":" + "0" + cal.get(Calendar.MINUTE);
+                } else {
                     gtime = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE);
                 }
             }
 
-            if(Calendar.DATE<10){
-                if(Calendar.MONTH < 10){
+            if (Calendar.DATE < 10) {
+                if (Calendar.MONTH < 10) {
                     testDate = "0" + cal.get(Calendar.DATE) + "/" + "0" + months + "/" + cal.get(Calendar.YEAR);
-                }else {
+                } else {
                     testDate = "0" + cal.get(Calendar.DATE) + "/" + months + "/" + cal.get(Calendar.YEAR);
                 }
-            }else {
-                if(Calendar.MONTH < 10){
+            } else {
+                if (Calendar.MONTH < 10) {
                     testDate = cal.get(Calendar.DATE) + "/" + "0" + months + "/" + cal.get(Calendar.YEAR);
-                }else {
+                } else {
                     testDate = cal.get(Calendar.DATE) + "/" + months + "/" + cal.get(Calendar.YEAR);
                 }
             }
@@ -191,14 +194,14 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
         String testDate = cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
         holder.date.setText(testDate);
 
-        if(ty.equals("Deadline Session") || ty.equals("HomeWork")){
+        if (ty.equals("Deadline Session") || ty.equals("HomeWork")) {
             holder.leftIV.setBackgroundResource(R.drawable.hourglass);
             holder.type.setText("Deadline Session");
-            holder.leftTV.setText(testDate+ ", " + ftime);
+            holder.leftTV.setText(testDate + ", " + ftime);
             holder.rightIV.setBackgroundResource(R.drawable.rupee);
             holder.rightTV.setText(Integer.toString(newDealResponsess.getResponses().get(position).getAmount()));
             holder.type.setBackgroundResource(R.color.colorTurquoise);
-        }else{
+        } else {
             holder.leftIV.setBackgroundResource(R.drawable.hourglass);
             holder.type.setText("Live Session");
             holder.leftTV.setText(gtime);
@@ -207,25 +210,24 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
         }
 
 
-
         holder.linearLayout.setVisibility(LinearLayout.GONE);
 
         final LinearLayout layout = holder.linearLayout;
 
-        if(newDealResponsess.getResponses().get(position).getMaterialComment() != null) {
+        if (newDealResponsess.getResponses().get(position).getMaterialComment() != null) {
             holder.material.setText(newDealResponsess.getResponses().get(position).getMaterialComment());
         }
-        if(newDealResponsess.getResponses().get(position).getBookName() != null){
+        if (newDealResponsess.getResponses().get(position).getBookName() != null) {
             holder.bookName.setText(newDealResponsess.getResponses().get(position).getBookName());
         }
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(layout.getVisibility() == LinearLayout.VISIBLE) {
+                if (layout.getVisibility() == LinearLayout.VISIBLE) {
                     layout.setVisibility(LinearLayout.GONE);
-                }else {
+                } else {
                     layout.setVisibility(LinearLayout.VISIBLE);
                 }
 
@@ -246,7 +248,7 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
 
         final API service = retrofit.create(API.class);
 
-        holder.accept.setOnClickListener(new View.OnClickListener() {
+        holder.accept.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
                 Call<AcceptedDealResponse> call = service.acceptedDeal(acceptDealRequest);
@@ -254,13 +256,13 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
                     @Override
                     public void onResponse(Call<AcceptedDealResponse> call, Response<AcceptedDealResponse> response) {
                         AcceptedDealResponse response1 = response.body();
-                        if(response.body().getMessage().equals("Successful !! Deal Booked !!")){
+                        if (response.body().getMessage().equals("Successful !! Deal Booked !!")) {
                             Log.d(",,", "" + " deal boooked");
 
 
-                            Log.d("jkhdjksahda  ","" + newDealResponsess.getResponses().get(position).getTimeFrom() );
+                            Log.d("jkhdjksahda  ", "" + newDealResponsess.getResponses().get(position).getTimeFrom());
 
-                            if(ty.equals("Deadline Session") || ty.equals("HomeWork")){
+                            if (ty.equals("Deadline Session") || ty.equals("HomeWork")) {
 
                                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                                 try {
@@ -294,9 +296,9 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
                                 Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.MONTH));
                                 Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.YEAR));
 
-                                Intent notificationmassage = new Intent(v.getContext(),NotificationMessage.class);
+                                Intent notificationmassage = new Intent(v.getContext(), NotificationMessage.class);
 
-                                Log.d("Tag","cool");
+                                Log.d("Tag", "cool");
 
                                 int id = (int) calendar.getTimeInMillis();
 
@@ -310,22 +312,18 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
                                 PendingIntent pi = PendingIntent.getBroadcast(v.getContext(), id, notificationmassage, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-                                Log.d("Tag","cooled");
+                                Log.d("Tag", "cooled");
                                 AlarmManager am = (AlarmManager) v.getContext().getSystemService(ALARM_SERVICE);
-                                Log.d("Tag","cooooled");
-
-
+                                Log.d("Tag", "cooooled");
 
 
                                 am.set(AlarmManager.RTC_WAKEUP, (calendar.getTimeInMillis() - 7200000), pi);
 
 
-
                                 Log.d("Tag", String.valueOf(calendar.getTimeInMillis()));
 
 
-                            }
-                            else {
+                            } else {
 
                                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                                 try {
@@ -388,23 +386,69 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
 
                             AppCompatActivity activity = (AppCompatActivity) v.getContext();
 
-                            if(ty.equals("HomeWork") || ty.equals("Home Work")) {
+                            if (ty.equals("HomeWork") || ty.equals("Home Work")) {
                                 AcceptedDeadlineSessionFragment newDealFragment = new AcceptedDeadlineSessionFragment();
                                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame_main_activity, newDealFragment).addToBackStack(null).commit();
-                            }else {
+                            } else {
                                 AcceptedLiveSessionFragment newDealFragment = new AcceptedLiveSessionFragment();
                                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame_main_activity, newDealFragment).addToBackStack(null).commit();
                             }
-                        }else{
+                        } else {
                             Toast.makeText(holder.itemView.getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
-                            Log.d("error in recycle", "  " );
+                            Log.d("error in recycle", "  ");
                         }
                     }
+
                     @Override
                     public void onFailure(Call<AcceptedDealResponse> call, Throwable t) {
                         Log.d(" error recycer no res", "   " + t.getMessage());
                     }
                 });
+            }
+        });
+
+        final RejectDealRequest rejectDealRequest = new RejectDealRequest();
+        rejectDealRequest.setDealId(newDealResponsess.getResponses().get(position).get_id());
+        rejectDealRequest.setToken(token);
+
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(holder.itemView.getContext().getString(R.string.api_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        final API service1 = retrofit1.create(API.class);
+
+        holder.reject.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(final View v) {
+                Call<RejectedDealResponse> call = service1.rejectedDeal(rejectDealRequest);
+                call.enqueue(new Callback<RejectedDealResponse>() {
+                    @Override
+                    public void onResponse(Call<RejectedDealResponse> call, Response<RejectedDealResponse> response) {
+
+                        RejectedDealResponse response2 = response.body();
+                        if (response.body().getMessage().equals("Unsuccessful")){
+
+                            Toast.makeText(holder.itemView.getContext(), "Unsuccessful", Toast.LENGTH_LONG).show();
+                            Log.d("error in recycle", "  ");
+
+                        }
+                        else{
+
+                            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+
+                            NewDealsFragment newDealFragment = new NewDealsFragment();
+                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame_main_activity, newDealFragment).addToBackStack(null).commit();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RejectedDealResponse> call, Throwable t) {
+                        Log.d(" error recycer no res", "   " + t.getMessage());
+                    }
+                });
+
+
             }
         });
 
@@ -419,6 +463,8 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
             return 0;
         }
     }
+
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 

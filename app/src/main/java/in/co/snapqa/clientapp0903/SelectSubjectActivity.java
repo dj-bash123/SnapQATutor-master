@@ -19,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.ToggleButton;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Set;
 
 import in.co.snapqa.clientapp0903.interfaces.API;
 import in.co.snapqa.clientapp0903.models.SubjectAddRequest;
@@ -33,6 +34,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.R.attr.typeface;
+
 
 public class SelectSubjectActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
@@ -59,6 +61,7 @@ public class SelectSubjectActivity extends AppCompatActivity implements Compound
     SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "MyPrefs" ;
     public static final String Key = "key";
+    public static final String Subjects = "Subjects";
 
 
 
@@ -545,12 +548,13 @@ public class SelectSubjectActivity extends AppCompatActivity implements Compound
                         SubjectAddResponse subjectAddResponse = response.body();
                         Log.d("jhfjksf", " lhdkjahj " + subjectAddResponse.getMessage());
                         Log.d("subkect list:   ", "" + subjectList);
-                        final String subjects = sharedpreferences.getString("Subjects", "notPresent");
+                        final String subjects = sharedpreferences.getString("Subjects", "not present");
+                        //Log.d("subjects dikhao", subjects);
                         if(subjects.equals("Subjects")){
                             SharedPreferences.Editor editor = sharedpreferences.edit();
                             editor.remove("Subjects");
                             editor.commit();
-                            Intent intent = new Intent(SelectSubjectActivity.this, TutorProfile.class);
+                            Intent intent = new Intent(SelectSubjectActivity.this, TutorSettings.class);
                             progressDialog.dismiss();
                             startActivity(intent);
                         }else {

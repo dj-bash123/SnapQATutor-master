@@ -30,3 +30,4 @@ public class AcceptDealRequest {
         this._id = _id;
     }
 }
+
