@@ -17,7 +17,7 @@ public class NewDealFragmentResponse {
     @Expose
     String _id;
 
-    @SerializedName("pointsOffered")
+    @SerializedName("amount")
     @Expose
     int amount;
 

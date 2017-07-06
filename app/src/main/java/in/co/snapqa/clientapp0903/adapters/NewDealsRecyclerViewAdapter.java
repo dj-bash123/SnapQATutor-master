@@ -260,67 +260,131 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
 
                             Log.d("jkhdjksahda  ","" + newDealResponsess.getResponses().get(position).getTimeFrom() );
 
+                            if(ty.equals("Deadline Session") || ty.equals("HomeWork")){
 
-                            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-                            try {
-                                date1 = formatter.parse(String.valueOf(newDealResponsess.getResponses().get(position).getTimeFrom()));
+                                DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                                try {
+                                    date1 = formatter.parse(String.valueOf(newDealResponsess.getResponses().get(position).getTimeTo()));
 
-                            } catch (ParseException e) {
-                                e.printStackTrace();
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+                                cal = Calendar.getInstance();
+                                cal.setTime(date1);
+                                cal.add(Calendar.MINUTE, 30);
+                                cal.add(Calendar.HOUR, 5);
+
+                                Log.d("Tag", String.valueOf(cal.get(Calendar.DATE)));
+
+
+                                calendar = Calendar.getInstance();
+
+                                calendar.set(Calendar.YEAR, cal.get(Calendar.YEAR));
+                                calendar.set(Calendar.MONTH, cal.get(Calendar.MONTH));
+                                calendar.set(Calendar.DATE, cal.get(Calendar.DATE));
+                                calendar.set(Calendar.HOUR_OF_DAY, cal.get(Calendar.HOUR_OF_DAY));
+                                calendar.set(Calendar.MINUTE, cal.get(Calendar.MINUTE));
+                                calendar.set(Calendar.SECOND, cal.get(Calendar.SECOND));
+
+                                Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.HOUR_OF_DAY));
+                                Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.MINUTE));
+                                Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.SECOND));
+                                Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.DATE));
+                                Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.MONTH));
+                                Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.YEAR));
+
+                                Intent notificationmassage = new Intent(v.getContext(),NotificationMessage.class);
+
+                                Log.d("Tag","cool");
+
+                                int id = (int) calendar.getTimeInMillis();
+
+                                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(v.getContext());
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putInt("Id", id);
+                                editor.putString("type", ty);
+                                Log.d("ID", String.valueOf(id));
+                                editor.apply();
+
+                                PendingIntent pi = PendingIntent.getBroadcast(v.getContext(), id, notificationmassage, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+                                Log.d("Tag","cooled");
+                                AlarmManager am = (AlarmManager) v.getContext().getSystemService(ALARM_SERVICE);
+                                Log.d("Tag","cooooled");
+
+
+
+
+                                am.set(AlarmManager.RTC_WAKEUP, (calendar.getTimeInMillis() - 7200000), pi);
+
+
+
+                                Log.d("Tag", String.valueOf(calendar.getTimeInMillis()));
+
+
                             }
+                            else {
 
-                            cal = Calendar.getInstance();
-                            cal.setTime(date1);
-                            cal.add(Calendar.MINUTE, 30);
-                            cal.add(Calendar.HOUR, 5);
+                                DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                                try {
+                                    date1 = formatter.parse(String.valueOf(newDealResponsess.getResponses().get(position).getTimeFrom()));
 
-                            Log.d("Tag", String.valueOf(cal.get(Calendar.DATE)));
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
 
+                                cal = Calendar.getInstance();
+                                cal.setTime(date1);
+                                cal.add(Calendar.MINUTE, 30);
+                                cal.add(Calendar.HOUR, 5);
 
-                            calendar = Calendar.getInstance();
-
-                            calendar.set(Calendar.YEAR, cal.get(Calendar.YEAR));
-                            calendar.set(Calendar.MONTH, cal.get(Calendar.MONTH));
-                            calendar.set(Calendar.DATE, cal.get(Calendar.DATE));
-                            calendar.set(Calendar.HOUR_OF_DAY, cal.get(Calendar.HOUR_OF_DAY));
-                            calendar.set(Calendar.MINUTE, cal.get(Calendar.MINUTE));
-                            calendar.set(Calendar.SECOND, cal.get(Calendar.SECOND));
-
-                            Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.HOUR_OF_DAY));
-                            Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.MINUTE));
-                            Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.SECOND));
-                            Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.DATE));
-                            Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.MONTH));
-                            Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.YEAR));
-
-                            Intent notificationmassage = new Intent(v.getContext(),NotificationMessage.class);
-
-                            Log.d("Tag","cool");
-
-                            int id = (int) calendar.getTimeInMillis();
-
-                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(v.getContext());
-                            SharedPreferences.Editor editor = preferences.edit();
-                            editor.putInt("Id", id);
-                            Log.d("ID", String.valueOf(id));
-                            editor.apply();
-
-                            PendingIntent pi = PendingIntent.getBroadcast(v.getContext(), id, notificationmassage, PendingIntent.FLAG_UPDATE_CURRENT);
+                                Log.d("Tag", String.valueOf(cal.get(Calendar.DATE)));
 
 
-                            Log.d("Tag","cooled");
-                            AlarmManager am = (AlarmManager) v.getContext().getSystemService(ALARM_SERVICE);
-                            Log.d("Tag","cooooled");
+                                calendar = Calendar.getInstance();
+
+                                calendar.set(Calendar.YEAR, cal.get(Calendar.YEAR));
+                                calendar.set(Calendar.MONTH, cal.get(Calendar.MONTH));
+                                calendar.set(Calendar.DATE, cal.get(Calendar.DATE));
+                                calendar.set(Calendar.HOUR_OF_DAY, cal.get(Calendar.HOUR_OF_DAY));
+                                calendar.set(Calendar.MINUTE, cal.get(Calendar.MINUTE));
+                                calendar.set(Calendar.SECOND, cal.get(Calendar.SECOND));
+
+                                Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.HOUR_OF_DAY));
+                                Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.MINUTE));
+                                Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.SECOND));
+                                Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.DATE));
+                                Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.MONTH));
+                                Log.d("hdfbsdhbfs :", "" + calendar.get(Calendar.YEAR));
+
+                                Intent notificationmassage = new Intent(v.getContext(), NotificationMessage.class);
+
+                                Log.d("Tag", "cool");
+
+                                int id = (int) calendar.getTimeInMillis();
+
+                                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(v.getContext());
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putInt("Id", id);
+                                editor.putString("type", ty);
+                                Log.d("ID", String.valueOf(id));
+                                editor.apply();
+
+                                PendingIntent pi = PendingIntent.getBroadcast(v.getContext(), id, notificationmassage, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
+                                Log.d("Tag", "cooled");
+                                AlarmManager am = (AlarmManager) v.getContext().getSystemService(ALARM_SERVICE);
+                                Log.d("Tag", "cooooled");
 
 
-                            am.set(AlarmManager.RTC_WAKEUP, (calendar.getTimeInMillis() - 900000), pi);
+                                am.set(AlarmManager.RTC_WAKEUP, (calendar.getTimeInMillis() - 900000), pi);
 
 
-
-                            Log.d("Tag", String.valueOf(calendar.getTimeInMillis()));
-
+                                Log.d("Tag", String.valueOf(calendar.getTimeInMillis()));
+                            }
 
                             AppCompatActivity activity = (AppCompatActivity) v.getContext();
 

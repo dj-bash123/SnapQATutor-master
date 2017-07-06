@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ClientApp0903</string>
+    <string name="app_name">SnapQA</string>
     <string name="api_url">http://ec2-52-54-173-224.compute-1.amazonaws.com:7200/api/snapQA/</string>
     <string name="title_activity_main">SnapQA</string>
 
