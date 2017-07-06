@@ -66,7 +66,7 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
     Date date,date1;
     Calendar cal,calendar;
     AlertDialog.Builder alertDialog;
-    String testDate;
+    String testDate,testdate1;
 
     MainActivity mainActivity = new MainActivity();
 
@@ -112,41 +112,44 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
         cal.setTime(date);
         int month = cal.get(Calendar.MONTH) + 1;
         cal.add(Calendar.MINUTE, 30);
-        cal.add(Calendar.HOUR, 5);
+        cal.add(Calendar.HOUR_OF_DAY, 5);
 
 
         Log.d("hdfbsdhbfs :", "" + cal.get(Calendar.HOUR));
 
-        if (Calendar.HOUR < 10) {
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
+        String time1 = sdf.format(cal.getTime());
+
+        /*if (Calendar.HOUR_OF_DAY < 10) {
 
             if (Calendar.MINUTE < 10) {
-                ftime = "0" + cal.get(Calendar.HOUR) + ":" + "0" + cal.get(Calendar.MINUTE);
+                ftime = "0" + cal.get(Calendar.HOUR_OF_DAY) + ":" + "0" + cal.get(Calendar.MINUTE);
             } else {
-                ftime = "0" + cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE);
+                ftime = "0" + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
             }
         } else {
             if (Calendar.MINUTE < 10) {
-                ftime = cal.get(Calendar.HOUR) + ":" + "0" + cal.get(Calendar.MINUTE);
+                ftime = cal.get(Calendar.HOUR_OF_DAY) + ":" + "0" + cal.get(Calendar.MINUTE);
             } else {
-                ftime = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE);
+                ftime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
             }
-        }
+        }*/
 
         if (Calendar.DATE < 10) {
             if (Calendar.MONTH < 10) {
-                testDate = "0" + cal.get(Calendar.DATE) + "/" + "0" + month + "/" + cal.get(Calendar.YEAR);
+                testdate1 = "0" + cal.get(Calendar.DATE) + "/" + "0" + month + "/" + cal.get(Calendar.YEAR);
             } else {
-                testDate = "0" + cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
+                testdate1= "0" + cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
             }
         } else {
             if (Calendar.MONTH < 10) {
-                testDate = cal.get(Calendar.DATE) + "/" + "0" + month + "/" + cal.get(Calendar.YEAR);
+                testdate1 = cal.get(Calendar.DATE) + "/" + "0" + month + "/" + cal.get(Calendar.YEAR);
             } else {
-                testDate = cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
+                testdate1 = cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
             }
         }
 
-        if (newDealResponsess.getResponses().get(position).getDealType().equals("Live Session")) {
+
             DateFormat formatte = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             try {
                 date = formatte.parse(String.valueOf(newDealResponsess.getResponses().get(position).getTimeFrom()));
@@ -159,22 +162,24 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
             cal.setTime(date);
             int months = cal.get(Calendar.MONTH) + 1;
             cal.add(Calendar.MINUTE, 30);
-            cal.add(Calendar.HOUR, 5);
+            cal.add(Calendar.HOUR_OF_DAY, 5);
 
-            if (Calendar.HOUR < 10) {
+            String time2 = sdf.format(cal.getTime());
+
+            /*if (Calendar.HOUR_OF_DAY < 10) {
 
                 if (Calendar.MINUTE < 10) {
-                    gtime = "0" + cal.get(Calendar.HOUR) + ":" + "0" + cal.get(Calendar.MINUTE);
+                    gtime = "0" + cal.get(Calendar.HOUR_OF_DAY) + ":" + "0" + cal.get(Calendar.MINUTE);
                 } else {
-                    gtime = "0" + cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE);
+                    gtime = "0" + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
                 }
             } else {
                 if (Calendar.MINUTE < 10) {
-                    gtime = cal.get(Calendar.HOUR) + ":" + "0" + cal.get(Calendar.MINUTE);
+                    gtime = cal.get(Calendar.HOUR_OF_DAY) + ":" + "0" + cal.get(Calendar.MINUTE);
                 } else {
-                    gtime = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE);
+                    gtime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
                 }
-            }
+            }*/
 
             if (Calendar.DATE < 10) {
                 if (Calendar.MONTH < 10) {
@@ -189,7 +194,7 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
                     testDate = cal.get(Calendar.DATE) + "/" + months + "/" + cal.get(Calendar.YEAR);
                 }
             }
-        }
+
 
         String testDate = cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
         holder.date.setText(testDate);
@@ -197,16 +202,16 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
         if (ty.equals("Deadline Session") || ty.equals("HomeWork")) {
             holder.leftIV.setBackgroundResource(R.drawable.hourglass);
             holder.type.setText("Deadline Session");
-            holder.leftTV.setText(testDate + ", " + ftime);
+            holder.leftTV.setText(testdate1 + ", " + time1);
             holder.rightIV.setBackgroundResource(R.drawable.rupee);
             holder.rightTV.setText(Integer.toString(newDealResponsess.getResponses().get(position).getAmount()));
             holder.type.setBackgroundResource(R.color.colorTurquoise);
         } else {
             holder.leftIV.setBackgroundResource(R.drawable.hourglass);
             holder.type.setText("Live Session");
-            holder.leftTV.setText(gtime);
+            holder.leftTV.setText(time2);
             holder.rightIV.setBackgroundResource(R.drawable.hourglass);
-            holder.rightTV.setText(ftime);
+            holder.rightTV.setText(time1);
         }
 
 

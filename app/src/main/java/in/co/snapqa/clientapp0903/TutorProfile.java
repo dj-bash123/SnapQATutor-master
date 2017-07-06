@@ -313,9 +313,12 @@ public class TutorProfile extends Activity {
                      });
 
 
-        Picasso.with(this)
+        /*Picasso.with(this)
                 .load("https://randomuser.me/api/portraits/med/men/57.jpg")
-                .into(imageButton1);
+                .into(imageButton1);*/
+
+        ImageButton imageButton = (ImageButton) findViewById(R.id.user_profile_photo);
+        imageButton.setBackgroundResource(R.drawable.ic_account_circle_black_48dp);
 
         linearLayout = (LinearLayout) findViewById(R.id.accsett);
         linearLayout1 = (LinearLayout) findViewById(R.id.log);
