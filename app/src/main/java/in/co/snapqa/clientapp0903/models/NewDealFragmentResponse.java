@@ -17,9 +17,9 @@ public class NewDealFragmentResponse {
     @Expose
     String _id;
 
-    @SerializedName("amount")
+    @SerializedName("priceTold")
     @Expose
-    int amount;
+    int priceTold;
 
     @SerializedName("subjectName")
     @Expose
@@ -82,9 +82,9 @@ public class NewDealFragmentResponse {
     @Expose
     String materialComment;
 
-    public NewDealFragmentResponse(String _id, int amount, String subjectName, String clientName, Date dealDate, String adminName, int __v, List bookedStatus, Boolean isActive, List feedback, List ratingArray, Date createdAt, String dealType, String timeTo, String timeFrom, String bookName, String materialComment) {
+    public NewDealFragmentResponse(String _id, int priceTold, String subjectName, String clientName, Date dealDate, String adminName, int __v, List bookedStatus, Boolean isActive, List feedback, List ratingArray, Date createdAt, String dealType, String timeTo, String timeFrom, String bookName, String materialComment) {
         this._id = _id;
-        this.amount = amount;
+        this.priceTold = priceTold;
         this.subjectName = subjectName;
         this.clientName = clientName;
         this.dealDate = dealDate;
@@ -110,12 +110,12 @@ public class NewDealFragmentResponse {
         this._id = _id;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getPriceTold() {
+        return priceTold;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setPriceTold(int priceTold) {
+        this.priceTold = priceTold;
     }
 
     public String getSubjectName() {

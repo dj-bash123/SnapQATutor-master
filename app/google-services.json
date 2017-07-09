@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "289163340245",
+    "firebase_url": "https://snapqa-6d9f6.firebaseio.com",
+    "project_id": "snapqa-6d9f6",
+    "storage_bucket": "snapqa-6d9f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289163340245:android:9eda7a98985b7de2",
+        "android_client_info": {
+          "package_name": "in.co.snapqa.clientapp0903"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289163340245-gktvotbf76g4uok0k9h9umhcvqoumtb4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVsm_ZXatPHahfcr8jpdvjIZ6TApO5tN4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

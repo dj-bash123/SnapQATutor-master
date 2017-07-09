@@ -24,12 +24,12 @@
                 <item
                     android:id="@+id/ic_menu_home_work"
                     android:title="Deadline Sessions"
-                    android:icon="@drawable/hourglass"/>
+                    android:icon="@drawable/hourglass_g"/>
 
                 <item
                     android:id="@+id/ic_menu_live_session"
                     android:title="Live Sessions"
-                    android:icon="@drawable/hourglass"/>
+                    android:icon="@drawable/hourglass_r"/>
 
             </menu>
         </item>

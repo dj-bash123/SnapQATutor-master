@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="in.co.snapqa.clientapp0903.TutorProfile"
-    tools:showIn="@layout/activity_tutor_profile">
+    tools:showIn="@layout/activity_tutor_settings">
 
     <LinearLayout
         android:layout_width="match_parent"

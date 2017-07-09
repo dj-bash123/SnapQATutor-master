@@ -46,6 +46,7 @@ public class Historyactivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     UserHistoryResponses userHistoryResponses;
     public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String MyPREFERENCE = "MyPref" ;
     public static final String Key = "key";
     //private List<UserHistoryFragmentResponse> historyList = new ArrayList<>();
     UserHistoryRecyclerViewAdapter userHistoryRecyclerViewAdapter;
@@ -77,6 +78,9 @@ public class Historyactivity extends AppCompatActivity {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+
+        getSupportActionBar().setTitle("History");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         userHistoryRecyclerView = (RecyclerView) findViewById(R.id.user_history_rv1);
 

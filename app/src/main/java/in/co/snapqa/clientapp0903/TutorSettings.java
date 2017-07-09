@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.*;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,7 @@ public class TutorSettings extends AppCompatActivity {
     TextView phoneNumber, whatsappNumber, email, accountNumber, IFSCCode, specialization, currentBalance, totalEarning, panNumber;
     SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String MyPREFERENCES1 = "MyPrefs1" ;
     public static final String Key = "key";
     public static final String Subjects = "Subjects";
     public static final String Bank = "Bank";
@@ -115,6 +117,7 @@ public class TutorSettings extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NoNet.configure()
                 .endpoint("https://google.com")
@@ -144,16 +147,7 @@ public class TutorSettings extends AppCompatActivity {
 
         specializationString = "";
 
-        /*specializationEditFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editor = sharedpreferences.edit();
-                editor.putString(Subjects, "Subjects");
-                editor.commit();
-                Intent intent = new Intent(TutorSettings.this, SelectSubjectActivity.class);
-                startActivity(intent);
-            }
-        });*/
+
 
         AuthRequest authRequest = new AuthRequest();
         authRequest.setToken(token);
@@ -189,6 +183,7 @@ public class TutorSettings extends AppCompatActivity {
 
                         if(i == 0){
                             specializationString = specs.get(i).toString();
+                            specialization.setText(specializationString);
                         }else {
                             specializationString = specializationString + "\n" + specs.get(i).toString();
                             Log.d("spe str  ", "  " + specializationString);
@@ -212,9 +207,20 @@ public class TutorSettings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 editor = sharedpreferences.edit();
-                editor.putString(Subjects, "Subjects");
-                //Log.d("sub ke name", String.valueOf(specs) );
+                editor.putString(Subjects,"Subjects");
                 editor.commit();
+
+                SharedPreferences preferences1 = android.preference.PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor1 = preferences1.edit();
+
+                editor1.putInt("array_size", specs.size());
+                for(int i=0;i<specs.size(); i++)
+                    editor1.putString("Subjects1"+ i, specs.get(i));
+                editor1.commit();
+
+
+
+                Log.d("Tag", String.valueOf(preferences1.getInt("array_size", 0)));
                 Intent intent = new Intent(TutorSettings.this, SelectSubjectActivity.class);
                 startActivity(intent);
             }

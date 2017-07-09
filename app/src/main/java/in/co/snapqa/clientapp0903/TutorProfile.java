@@ -1,21 +1,28 @@
 package in.co.snapqa.clientapp0903;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AlertDialogLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.keiferstone.nonet.NoNet;
@@ -210,17 +217,18 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.DatePicker;
 import com.squareup.picasso.Picasso;
-
+import android.widget.RelativeLayout.LayoutParams;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
 
-public class TutorProfile extends Activity {
+public class TutorProfile extends AppCompatActivity {
 
-    TextView Name;
+    TextView Name,Request;
 
-    LinearLayout linearLayout,linearLayout1;
+    LinearLayout linearLayout,linearLayout1,linearLayout2;
 
     String rating, name;
     UserProfileResponse userProfileResponse;
@@ -276,6 +284,9 @@ public class TutorProfile extends Activity {
                 .build()
         );
 
+        getSupportActionBar().setTitle("Profile");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         String token = sharedpreferences.getString(Key, "notPresent");
 
@@ -322,6 +333,8 @@ public class TutorProfile extends Activity {
 
         linearLayout = (LinearLayout) findViewById(R.id.accsett);
         linearLayout1 = (LinearLayout) findViewById(R.id.log);
+        Request = (TextView) findViewById(R.id.reqredeem);
+        linearLayout2 = (LinearLayout) findViewById(R.id.hist);
 
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -339,16 +352,24 @@ public class TutorProfile extends Activity {
             }
         });
 
+        Request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(TutorProfile.this, "Contact Admin!!", Toast.LENGTH_LONG).show();
+            }
+        });
+
 
 
     }
 
-    public static class DatePickerFragment extends DialogFragment
+   public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
         StringBuilder sb = new StringBuilder();
         public static String dat;
 
+        @SuppressWarnings("ResourceType")
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current date as the default date in the picker
@@ -357,17 +378,42 @@ public class TutorProfile extends Activity {
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
 
+
+            DatePickerDialog dpd = new DatePickerDialog(getActivity(),
+                    AlertDialog.THEME_HOLO_LIGHT,this,year,month,day);
+
+            // Create a TextView programmatically.
+            TextView tv = new TextView(getActivity());
+
+            // Create a TextView programmatically
+            LayoutParams lp = new RelativeLayout.LayoutParams(
+                    LayoutParams.WRAP_CONTENT, // Width of TextView
+                    LayoutParams.WRAP_CONTENT); // Height of TextView
+            tv.setLayoutParams(lp);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setGravity(Gravity.CENTER);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
+            tv.setTextColor(Color.parseColor("#ff0000"));
+            tv.setBackgroundColor(Color.parseColor("#FFD2DAA7"));
+
+            // Set the newly created TextView as a custom tile of DatePickerDialog
+            //dpd.setCustomTitle(tv);
+
+            // Or you can simply set a tile for DatePickerDialog
+            /*
+                setTitle(CharSequence title)
+                    Set the title text for this dialog's window.
+            */
+            dpd.setTitle("Select the date from which you want to know your history."); // Uncomment this line to activate it
+
+            // Return the DatePickerDialog
+            return  dpd;
+
             // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
+            //return new DatePickerDialog(getActivity(), this, year, month, day);
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-
-            /*Calendar cal = Calendar.getInstance();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String dat = dateFormat.format(cal.getTime());
-
-            Log.d("Tag",dat);*/
 
             sb.append(year);
             sb.append('-');

@@ -108,6 +108,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Sign Up");
 
+
         NoNet.configure()
                 .endpoint("https://google.com")
                 .timeout(5)

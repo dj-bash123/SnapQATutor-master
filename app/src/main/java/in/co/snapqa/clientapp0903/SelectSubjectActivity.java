@@ -22,8 +22,10 @@ import java.util.Locale;
 import java.util.Set;
 
 import in.co.snapqa.clientapp0903.interfaces.API;
+import in.co.snapqa.clientapp0903.models.AuthRequest;
 import in.co.snapqa.clientapp0903.models.SubjectAddRequest;
 import in.co.snapqa.clientapp0903.models.SubjectAddResponse;
+import in.co.snapqa.clientapp0903.models.UserProfileResponse;
 import me.anwarshahriar.calligrapher.Calligrapher;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +36,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.R.attr.typeface;
+import static in.co.snapqa.clientapp0903.network.APIClient.retrofit;
 
 
 public class SelectSubjectActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
@@ -53,13 +56,18 @@ public class SelectSubjectActivity extends AppCompatActivity implements Compound
     ToggleButton finance, accountancy, engineeringEconomics, probabilityEconomics, statisticsEconomics, operationResearch;
     ToggleButton roboticsMisc, philosophy, humanities, essayWriting, alternativeEnergy, powderMetaallurgy, geology, geophysics, operationResearchMisc, engineeringCosttAnalysis;
     ScrollView scrollView;
+    UserProfileResponse userProfileResponse;
+
+
 
     ProgressDialog progressDialog;
 
     Button selectSubject;
+    ArrayList<String> arrayList1;
 
     SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String MyPREFERENCES1 = "MyPrefs1" ;
     public static final String Key = "key";
     public static final String Subjects = "Subjects";
 
@@ -82,6 +90,8 @@ public class SelectSubjectActivity extends AppCompatActivity implements Compound
         );
 
         getSupportActionBar().setTitle("Choose Your Subjects");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/opensanssemibold.ttf");
 
@@ -136,6 +146,11 @@ public class SelectSubjectActivity extends AppCompatActivity implements Compound
 
         miscSubjectLayout = (LinearLayout) findViewById(R.id.misc_subjects);
         miscSubjectLayout.setVisibility(LinearLayout.GONE);
+
+
+
+
+
 
         thermodynamics = (ToggleButton) findViewById(R.id.select_subject_thermodynamics);
         heatTransfer = (ToggleButton) findViewById(R.id.select_subject_heat_transfer);
@@ -237,6 +252,141 @@ public class SelectSubjectActivity extends AppCompatActivity implements Compound
         geophysics = (ToggleButton) findViewById(R.id.select_subject_geophysics);
         operationResearchMisc = (ToggleButton) findViewById(R.id.select_subject_operations_research_misc);
         engineeringCosttAnalysis = (ToggleButton) findViewById(R.id.select_subject_engineering_cost_analysis);
+
+        ArrayList<ToggleButton> arrayList = new ArrayList<ToggleButton>();
+        arrayList.add(thermodynamics);
+        arrayList.add(heatTransfer);
+        arrayList.add(fluidMechanics);
+        arrayList.add(thermoFluids);
+        arrayList.add(compressibleFluidFlow);
+        arrayList.add(cfd);
+        arrayList.add(internalCombustion);
+        arrayList.add(turbomachines);
+        arrayList.add(statics);
+        arrayList.add(dynamics);
+        arrayList.add(strengthOfMaterial);
+        arrayList.add(theoryOfMachines);
+        arrayList.add(machineDesign);
+        arrayList.add(vibrations);
+        arrayList.add(systemDynamics);
+        arrayList.add(designOfMachineElements);
+        arrayList.add(manufacturingProcess);
+        arrayList.add(materialScience);
+        arrayList.add(compositeMaterial);
+        arrayList.add(measurement);
+        arrayList.add(controlSystem);
+        arrayList.add(finiteElementAnalysis);
+        arrayList.add(engineeringDrawing);
+        arrayList.add(solidWorks);
+        arrayList.add(ansys);
+        arrayList.add(autocad);
+        arrayList.add(matlabMechanical);
+        arrayList.add(robotics);
+        arrayList.add(staticsCivil);
+        arrayList.add(dynamicsCivil);
+        arrayList.add(strengthOfMaterialCivil);
+        arrayList.add(structuralAnalysis);
+        arrayList.add(environmentalEngineering);
+        arrayList.add(hydraulics);
+        arrayList.add(soilMechanics);
+        arrayList.add(surveying);
+        arrayList.add(fluidMechanicsCivil);
+        arrayList.add(engineeringDrawingCivil);
+        arrayList.add(solidWorksCivil);
+        arrayList.add(transportationEngineering);
+        arrayList.add(basicEC);
+        arrayList.add(circuits);
+        arrayList.add(measurementElectrical);
+        arrayList.add(controlSystemElectrical);
+        arrayList.add(embeddedSystem);
+        arrayList.add(electrostatics);
+        arrayList.add(powerSystems);
+        arrayList.add(electricalEngineering);
+        arrayList.add(roboticsElectrical);
+        arrayList.add(matlabElectrical);
+        arrayList.add(linearAlgebra);
+        arrayList.add(precalculus);
+        arrayList.add(calculus1);
+        arrayList.add(calculus2);
+        arrayList.add(calculus3);
+        arrayList.add(differentialEquations);
+        arrayList.add(numericalMethods);
+        arrayList.add(sequenceAndSeries);
+        arrayList.add(vectors);
+        arrayList.add(probability);
+        arrayList.add(statistics);
+        arrayList.add(vba);
+        arrayList.add(complexMaths);
+        arrayList.add(mechanics);
+        arrayList.add(physics);
+        arrayList.add(electrostaticsPhysics);
+        arrayList.add(soundAndWaves);
+        arrayList.add(optics);
+        arrayList.add(mmodernPhysics);
+        arrayList.add(gravitation);
+        arrayList.add(inorganicChemistry);
+        arrayList.add(organicChemistry);
+        arrayList.add(physicalChemistry);
+        arrayList.add(generalChemistry);
+        arrayList.add(matlab);
+        arrayList.add(cpp);
+        arrayList.add(java);
+        arrayList.add(autocadSoftware);
+        arrayList.add(ansysSoftware);
+        arrayList.add(solidWorksSoftware);
+        arrayList.add(vbaSoftware);
+        arrayList.add(visualStudio);
+        arrayList.add(appDevelopment);
+        arrayList.add(finance);
+        arrayList.add(accountancy);
+        arrayList.add(engineeringEconomics);
+        arrayList.add(probabilityEconomics);
+        arrayList.add(statisticsEconomics);
+        arrayList.add(operationResearch);
+        arrayList.add(roboticsMisc);
+        arrayList.add(philosophy);
+        arrayList.add(humanities);
+        arrayList.add(essayWriting);
+        arrayList.add(alternativeEnergy);
+        arrayList.add(powderMetaallurgy);
+        arrayList.add(geology);
+        arrayList.add(geophysics);
+        arrayList.add(operationResearchMisc);
+        arrayList.add(engineeringCosttAnalysis);
+
+
+        Log.d("Tag", "fuck ye kya ho ra h");
+
+        SharedPreferences preferences1 = android.preference.PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        int size = preferences1.getInt("array_size", 0);
+        arrayList1 = new ArrayList<String>(size);
+        for(int i=0; i<size; i++) {
+            arrayList1.add(preferences1.getString("Subjects1" + i, null));
+
+        }
+
+
+
+        for(int i=0; i<arrayList1.size();i++){
+            for (int j=0; j<arrayList.size();j++) {
+
+                //Log.d("error in response:  ", "  " + arrayList.get(j).getText());
+
+                //Log.d("Tag", arrayList1.get(i));
+                if (arrayList1.get(i).equals(arrayList.get(j).getText())) {
+
+                    Log.d("Tag", arrayList1.get(i));
+                    Log.d("Tag", String.valueOf(arrayList.get(j).getText()));
+
+                    arrayList.get(j).setChecked(true);
+                    Drawable drawable = getResources().getDrawable(R.drawable.button_rounded_corners_blue);
+                    arrayList.get(j).setBackground(drawable);
+                    arrayList.get(j).setTextColor(Color.parseColor("#FFFFFF"));
+
+                }
+            }
+        }
 
         thermodynamics.setOnCheckedChangeListener(this);
         heatTransfer.setOnCheckedChangeListener(this);
@@ -532,6 +682,11 @@ public class SelectSubjectActivity extends AppCompatActivity implements Compound
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         final String token = sharedpreferences.getString(Key, "notPresent");
 
+        for(int i=0; i<arrayList1.size(); i++) {
+            subjectList.add(arrayList1.get(i));
+
+        }
+
         selectSubject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -580,14 +735,15 @@ public class SelectSubjectActivity extends AppCompatActivity implements Compound
             Drawable drawable = getResources().getDrawable(R.drawable.button_rounded_corners_blue);
             buttonView.setBackground(drawable);
             buttonView.setTextColor(Color.parseColor("#FFFFFF"));
-            subjectList.add(buttonView.getText().toString());
+            subjectList.add(String.valueOf(buttonView.getText()));
+
 
         }else {
             Drawable drawable = getResources().getDrawable(R.drawable.button_rounded_corners);
             buttonView.setBackground(drawable);
             buttonView.setTextColor(Color.parseColor("#03A9F4"));
             for(int i=0; i<subjectList.size(); i++){
-                if(buttonView.getText().toString().equals(subjectList.get(i))){
+                if(buttonView.getText().equals(subjectList.get(i))){
 
                     subjectList.remove(i);
                     break;

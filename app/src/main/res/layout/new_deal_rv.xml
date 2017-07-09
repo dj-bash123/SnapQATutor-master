@@ -22,15 +22,22 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="12dp"
+                    android:id="@+id/tv"
+                    android:layout_marginTop="5dp"/>
 
                 <TextView
                     android:id="@+id/new_deal_fragment_rv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginLeft="7dp"
                     android:padding="4dp"
-                    android:text="17/03/17"
+
                     android:textSize="14dp" />
 
             </LinearLayout>
@@ -73,7 +80,8 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                android:background="#c0c0c0" />
+                android:background="#c0c0c0"
+                android:layout_marginBottom="5dp"/>
 
             <LinearLayout
                 android:id="@+id/new_deal_fragment_rv_live_session_layout"
@@ -85,11 +93,12 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
 
                     <ImageView
                         android:id="@+id/new_deal_fragment_rv_left_iv"
@@ -110,11 +119,12 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
 
                     <ImageView
                         android:id="@+id/new_deal_fragment_rv_right_iv"

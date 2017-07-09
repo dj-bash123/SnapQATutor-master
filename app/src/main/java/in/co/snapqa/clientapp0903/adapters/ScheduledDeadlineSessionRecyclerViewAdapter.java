@@ -47,7 +47,7 @@ public class ScheduledDeadlineSessionRecyclerViewAdapter extends RecyclerView.Ad
     Date date;
     Calendar cal;
     AlertDialog.Builder alertDialog;
-    String testDate;
+    String testDate,testDate1;
 
     Context context;
 
@@ -88,6 +88,9 @@ public class ScheduledDeadlineSessionRecyclerViewAdapter extends RecyclerView.Ad
         cal.add(Calendar.MINUTE, 30);
         cal.add(Calendar.HOUR, 5);
 
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
+        String time1 = sdf.format(cal.getTime());
+
         if(Calendar.HOUR<10){
 
             if(Calendar.MINUTE<10){
@@ -103,21 +106,27 @@ public class ScheduledDeadlineSessionRecyclerViewAdapter extends RecyclerView.Ad
             }
         }
 
-        if(Calendar.DATE<10){
-            if(Calendar.MONTH < 10){
-                testDate = "0" + cal.get(Calendar.DATE) + "/" + "0" + month + "/" + cal.get(Calendar.YEAR);
+        /*if(Calendar.DATE<10){
+            if(month < 10){
+                testDate =  cal.get(Calendar.DATE) + "-" + "0" + month + "-" + cal.get(Calendar.YEAR);
             }else {
-                testDate = "0" + cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
+                testDate =  cal.get(Calendar.DATE) + "-" + month + "-" + cal.get(Calendar.YEAR);
             }
         }else {
             if(Calendar.MONTH < 10){
-                testDate = cal.get(Calendar.DATE) + "/" + "0" + month + "/" + cal.get(Calendar.YEAR);
+                testDate = cal.get(Calendar.DATE) + "-" + "0" + month + "-" + cal.get(Calendar.YEAR);
             }else {
-                testDate = cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
+                testDate = cal.get(Calendar.DATE) + "-" + month + "-" + cal.get(Calendar.YEAR);
             }
-        }
+        }*/
 
-        if(newDealResponsess.getResponses().get(position).getDealType().equals("Live Session")){
+        SimpleDateFormat month_date = new SimpleDateFormat("MMM");
+        String month_name = month_date.format(cal.getTime());
+
+        testDate = cal.get(Calendar.DATE) + "-" + month_name + "-" + cal.get(Calendar.YEAR);
+
+
+
             DateFormat formatte = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             try {
                 date = formatte.parse(String.valueOf(newDealResponsess.getResponses().get(position).getTimeFrom()));
@@ -131,6 +140,8 @@ public class ScheduledDeadlineSessionRecyclerViewAdapter extends RecyclerView.Ad
             int months = cal.get(Calendar.MONTH) + 1;
             cal.add(Calendar.MINUTE, 30);
             cal.add(Calendar.HOUR, 5);
+
+            String time2 = sdf.format(cal.getTime());
 
             if(Calendar.HOUR<10){
 
@@ -147,38 +158,41 @@ public class ScheduledDeadlineSessionRecyclerViewAdapter extends RecyclerView.Ad
                 }
             }
 
-            if(Calendar.DATE<10){
-                if(Calendar.MONTH < 10){
-                    testDate = "0" + cal.get(Calendar.DATE) + "/" + "0" + months + "/" + cal.get(Calendar.YEAR);
+            /*if(Calendar.DATE<10){
+                if(months < 10){
+                    testDate1 =  cal.get(Calendar.DATE) + "-" + "0" + months + "-" + cal.get(Calendar.YEAR);
                 }else {
-                    testDate = "0" + cal.get(Calendar.DATE) + "/" + months + "/" + cal.get(Calendar.YEAR);
+                    testDate1 =  cal.get(Calendar.DATE) + "-" + months + "-" + cal.get(Calendar.YEAR);
                 }
             }else {
-                if(Calendar.MONTH < 10){
-                    testDate = cal.get(Calendar.DATE) + "/" + "0" + months + "/" + cal.get(Calendar.YEAR);
+                if(months < 10){
+                    testDate1 = cal.get(Calendar.DATE) + "-" + "0" + months + "-" + cal.get(Calendar.YEAR);
                 }else {
-                    testDate = cal.get(Calendar.DATE) + "/" + months + "/" + cal.get(Calendar.YEAR);
+                    testDate1 = cal.get(Calendar.DATE) + "-" + months + "-" + cal.get(Calendar.YEAR);
                 }
-            }
-        }
+            }*/
 
+        String month_name1 = month_date.format(cal.getTime());
 
-        String testDate = cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
-        holder.date.setText(testDate);
+        testDate1 = cal.get(Calendar.DATE) + "-" + month_name1 + "-" + cal.get(Calendar.YEAR);
 
         if(ty.equals("Deadline Session") || ty.equals("HomeWork")){
-            holder.leftIV.setBackgroundResource(R.drawable.hourglass);
+            holder.date.setText(testDate);
+            holder.topIV.setBackgroundResource(R.drawable.dat);
+            holder.leftIV.setBackgroundResource(R.drawable.hourglass_r);
             holder.type.setText("Deadline Session");
-            holder.leftTV.setText(testDate+ ", " + ftime);
+            holder.leftTV.setText(testDate+ ", " + time1);
             holder.rightIV.setBackgroundResource(R.drawable.rupee);
-            holder.rightTV.setText(Integer.toString(newDealResponsess.getResponses().get(position).getAmount()));
+            holder.rightTV.setText(Integer.toString(newDealResponsess.getResponses().get(position).getPriceTold()));
             holder.type.setBackgroundResource(R.color.colorTurquoise);
         }else{
-            holder.leftIV.setBackgroundResource(R.drawable.hourglass);
+            holder.date.setText(testDate1);
+            holder.topIV.setBackgroundResource(R.drawable.dat);
+            holder.leftIV.setBackgroundResource(R.drawable.hourglass_g);
             holder.type.setText("Live Session");
-            holder.leftTV.setText(gtime);
-            holder.rightIV.setBackgroundResource(R.drawable.hourglass);
-            holder.rightTV.setText(ftime);
+            holder.leftTV.setText(time2);
+            holder.rightIV.setBackgroundResource(R.drawable.hourglass_r);
+            holder.rightTV.setText(time1);
         }
         holder.linearLayout.setVisibility(LinearLayout.GONE);
 
@@ -257,7 +271,7 @@ public class ScheduledDeadlineSessionRecyclerViewAdapter extends RecyclerView.Ad
 
         TextView subject, type, date, leftTV, rightTV, bookName, material, comments;
         LinearLayout linearLayout, acceptReject;
-        ImageView leftIV, rightIV;
+        ImageView leftIV, rightIV,topIV;
         Button accept, reject;
 
         Typeface font1 = Typeface.createFromAsset(itemView.getContext().getAssets(), "fonts/opensanslight.ttf");
@@ -281,6 +295,7 @@ public class ScheduledDeadlineSessionRecyclerViewAdapter extends RecyclerView.Ad
 
             leftIV = (ImageView) itemView.findViewById(R.id.new_deal_fragment_rv_left_iv);
             rightIV = (ImageView) itemView.findViewById(R.id.new_deal_fragment_rv_right_iv);
+            topIV = (ImageView) itemView.findViewById(R.id.tv);
 
             accept = (Button) itemView.findViewById(R.id.new_deal_fragment_rv_accept);
             reject = (Button) itemView.findViewById(R.id.new_deal_fragment_rv_reject);

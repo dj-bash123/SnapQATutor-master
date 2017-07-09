@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,10 +35,12 @@ import java.util.Date;
 
 import in.co.snapqa.clientapp0903.AcceptedDeadlineSessionFragment;
 import in.co.snapqa.clientapp0903.AcceptedLiveSessionFragment;
+import in.co.snapqa.clientapp0903.Historyactivity;
 import in.co.snapqa.clientapp0903.MainActivity;
 import in.co.snapqa.clientapp0903.NewDealsFragment;
 import in.co.snapqa.clientapp0903.NotificationMessage;
 import in.co.snapqa.clientapp0903.R;
+import in.co.snapqa.clientapp0903.TutorProfile;
 import in.co.snapqa.clientapp0903.interfaces.API;
 import in.co.snapqa.clientapp0903.models.AcceptDealRequest;
 import in.co.snapqa.clientapp0903.models.AcceptedDealResponse;
@@ -135,19 +138,24 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
             }
         }*/
 
-        if (Calendar.DATE < 10) {
-            if (Calendar.MONTH < 10) {
-                testdate1 = "0" + cal.get(Calendar.DATE) + "/" + "0" + month + "/" + cal.get(Calendar.YEAR);
+        /*if (Calendar.DATE < 10) {
+            if (month < 10) {
+                testdate1 = cal.get(Calendar.DATE) + "-" + "0" + month + "-" + cal.get(Calendar.YEAR);
             } else {
-                testdate1= "0" + cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
+                testdate1= cal.get(Calendar.DATE) + "-" + month + "-" + cal.get(Calendar.YEAR);
             }
         } else {
-            if (Calendar.MONTH < 10) {
-                testdate1 = cal.get(Calendar.DATE) + "/" + "0" + month + "/" + cal.get(Calendar.YEAR);
+            if (month < 10) {
+                testdate1 = cal.get(Calendar.DATE) + "-" + "0" + month + "-" + cal.get(Calendar.YEAR);
             } else {
-                testdate1 = cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
+                testdate1 = cal.get(Calendar.DATE) + "-" + month + "-" + cal.get(Calendar.YEAR);
             }
-        }
+        }*/
+
+        SimpleDateFormat month_date = new SimpleDateFormat("MMM");
+        String month_name = month_date.format(cal.getTime());
+
+        testdate1 = cal.get(Calendar.DATE) + "-" + month_name + "-" + cal.get(Calendar.YEAR);
 
 
             DateFormat formatte = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -181,36 +189,41 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
                 }
             }*/
 
-            if (Calendar.DATE < 10) {
-                if (Calendar.MONTH < 10) {
-                    testDate = "0" + cal.get(Calendar.DATE) + "/" + "0" + months + "/" + cal.get(Calendar.YEAR);
+           /* if (Calendar.DATE < 10) {
+                if (months < 10) {
+                    testDate = cal.get(Calendar.DATE) + "-" + "0" + months + "-" + cal.get(Calendar.YEAR);
                 } else {
-                    testDate = "0" + cal.get(Calendar.DATE) + "/" + months + "/" + cal.get(Calendar.YEAR);
+                    testDate = cal.get(Calendar.DATE) + "-" + months + "-" + cal.get(Calendar.YEAR);
                 }
             } else {
-                if (Calendar.MONTH < 10) {
-                    testDate = cal.get(Calendar.DATE) + "/" + "0" + months + "/" + cal.get(Calendar.YEAR);
+                if (months < 10) {
+                    testDate = cal.get(Calendar.DATE) + "-" + "0" + months + "-" + cal.get(Calendar.YEAR);
                 } else {
-                    testDate = cal.get(Calendar.DATE) + "/" + months + "/" + cal.get(Calendar.YEAR);
+                    testDate = cal.get(Calendar.DATE) + "-" + months + "-" + cal.get(Calendar.YEAR);
                 }
-            }
+            }*/
 
 
-        String testDate = cal.get(Calendar.DATE) + "/" + month + "/" + cal.get(Calendar.YEAR);
-        holder.date.setText(testDate);
+        String month_name1 = month_date.format(cal.getTime());
+
+        testDate = cal.get(Calendar.DATE) + "-" + month_name1 + "-" + cal.get(Calendar.YEAR);
 
         if (ty.equals("Deadline Session") || ty.equals("HomeWork")) {
-            holder.leftIV.setBackgroundResource(R.drawable.hourglass);
+            holder.date.setText(testdate1);
+            holder.topIV.setBackgroundResource(R.drawable.dat);
+            holder.leftIV.setBackgroundResource(R.drawable.hourglass_r);
             holder.type.setText("Deadline Session");
             holder.leftTV.setText(testdate1 + ", " + time1);
             holder.rightIV.setBackgroundResource(R.drawable.rupee);
-            holder.rightTV.setText(Integer.toString(newDealResponsess.getResponses().get(position).getAmount()));
+            holder.rightTV.setText(Integer.toString(newDealResponsess.getResponses().get(position).getPriceTold()));
             holder.type.setBackgroundResource(R.color.colorTurquoise);
         } else {
-            holder.leftIV.setBackgroundResource(R.drawable.hourglass);
+            holder.date.setText(testDate);
+            holder.topIV.setBackgroundResource(R.drawable.dat);
+            holder.leftIV.setBackgroundResource(R.drawable.hourglass_g);
             holder.type.setText("Live Session");
             holder.leftTV.setText(time2);
-            holder.rightIV.setBackgroundResource(R.drawable.hourglass);
+            holder.rightIV.setBackgroundResource(R.drawable.hourglass_r);
             holder.rightTV.setText(time1);
         }
 
@@ -391,12 +404,17 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
 
                             AppCompatActivity activity = (AppCompatActivity) v.getContext();
 
-                            if (ty.equals("HomeWork") || ty.equals("Home Work")) {
+                            if (ty.equals("HomeWork") || ty.equals("Deadline Session")) {
+
                                 AcceptedDeadlineSessionFragment newDealFragment = new AcceptedDeadlineSessionFragment();
                                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame_main_activity, newDealFragment).addToBackStack(null).commit();
+                                activity.getSupportActionBar().setTitle("Your Deadline Sessions");
+
                             } else {
+
                                 AcceptedLiveSessionFragment newDealFragment = new AcceptedLiveSessionFragment();
                                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame_main_activity, newDealFragment).addToBackStack(null).commit();
+                                activity.getSupportActionBar().setTitle("Your Live Sessions");
                             }
                         } else {
                             Toast.makeText(holder.itemView.getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -475,7 +493,7 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
 
         TextView subject, type, date, leftTV, rightTV, bookName, material, comments;
         LinearLayout linearLayout;
-        ImageView leftIV, rightIV;
+        ImageView leftIV, rightIV,topIV;
         Button accept, reject;
 
         Typeface font1 = Typeface.createFromAsset(itemView.getContext().getAssets(), "fonts/opensanslight.ttf");
@@ -497,6 +515,8 @@ public class NewDealsRecyclerViewAdapter extends RecyclerView.Adapter<NewDealsRe
 
             leftIV = (ImageView) itemView.findViewById(R.id.new_deal_fragment_rv_left_iv);
             rightIV = (ImageView) itemView.findViewById(R.id.new_deal_fragment_rv_right_iv);
+            topIV = (ImageView) itemView.findViewById(R.id.tv);
+
 
             accept = (Button) itemView.findViewById(R.id.new_deal_fragment_rv_accept);
             reject = (Button) itemView.findViewById(R.id.new_deal_fragment_rv_reject);
